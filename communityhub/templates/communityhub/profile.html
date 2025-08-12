@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ user_profile.username }}'s Profile</title>
+</head>
+<body>
+    <h1>{{ profile.display_name }}</h1>
+    <p>{{ profile.bio }}</p>
+    <h3>Groups</h3>
+    <ul>
+        {% for group in groups %}
+            <li>{{ group.name }}</li>
+        {% empty %}
+            <li>No groups joined yet.</li>
+        {% endfor %}
+    </ul>
+    <h3>Posts</h3>
+    {% for post in posts %}
+        <h4>{{ post.title }}</h4>
+        <p>{{ post.content|truncatewords:20 }}</p>
+    {% empty %}
+        <p>No posts yet.</p>
+    {% endfor %}
+</body>
+</html>

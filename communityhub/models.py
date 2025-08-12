@@ -41,5 +41,14 @@ class Comment(models.Model):
 
 
 
-# many to one
- 
+# many to many
+class Group(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True)
+    member = models.ManyToManyField(User, related_name="community_groups")
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+     return self.name
+
+

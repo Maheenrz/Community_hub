@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CommunityHub - Home</title>
+</head>
+<body>
+    <h1>CommunityHub Feed</h1>
+    {% for post in posts %}
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.content|truncatewords:30 }}</p>
+        <small>By {{ post.author.username }} on {{ post.created_at }}</small>
+        <hr>
+    {% empty %}
+        <p>No posts yet.</p>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,12 @@
+<h1>{{ post.title }}</h1>
+<p>By {{ post.author.username }} on {{ post.created_at }}</p>
+<p>{{ post.content }}</p>
+
+<h2>Comments</h2>
+<ul>
+    {% for comment in comments %}
+        <li><strong>{{ comment.author.username }}</strong>: {{ comment.content }}</li>
+    {% empty %}
+        <li>No comments yet.</li>
+    {% endfor %}
+</ul>
