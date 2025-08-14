@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CommunityHub</title>
+</head>
+<body>
+    <header>
+        <h1>CommunityHub</h1>
+        <nav>
+            <a href="{% url 'home_feed' %}">Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'create_post' %}">New Post</a>
+                <span>Welcome, {{ user.username }}</span>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <hr>
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

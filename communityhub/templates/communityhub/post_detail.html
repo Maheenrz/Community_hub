@@ -1,12 +1,16 @@
 <h1>{{ post.title }}</h1>
-<p>By {{ post.author.username }} on {{ post.created_at }}</p>
 <p>{{ post.content }}</p>
 
-<h2>Comments</h2>
-<ul>
-    {% for comment in comments %}
-        <li><strong>{{ comment.author.username }}</strong>: {{ comment.content }}</li>
-    {% empty %}
-        <li>No comments yet.</li>
-    {% endfor %}
-</ul>
+<h3>Comments</h3>
+{% for comment in comments %}
+    <p><b>{{ comment.author }}</b>: {{ comment.content }}</p>
+{% empty %}
+    <p>No comments yet.</p>
+{% endfor %}
+
+<h3>Add a Comment</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Post Comment</button>
+</form>
