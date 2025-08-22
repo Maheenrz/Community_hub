@@ -14,3 +14,11 @@
     {{ form.as_p }}
     <button type="submit">Post Comment</button>
 </form>
+
+
+<form method="POST" action="{% url 'like_post' post.id %}">
+    {% csrf_token %}
+    <button type="submit">
+        ❤️ Like ({{ post.likes.count }})
+    </button>
+</form>

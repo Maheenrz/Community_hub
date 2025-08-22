@@ -9,4 +9,9 @@ urlpatterns = [
     path('post/<int:post_id>', views.post_detail, name='post_detail'),
     path('post/new/', views.create_post_view, name='create_post'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('post/<int:post_id>/like/', views.like_post, name='like_post'),
+    path('group/', views.groups, name='groups'),
+    path('group/<int:group_id>/', views.group_detail, name = 'group_detail'),
+    path('group/<int:group_id>/join/', views.join_group, name='join_group'),
+
 ]

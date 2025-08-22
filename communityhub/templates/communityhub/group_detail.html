@@ -1,0 +1,21 @@
+<h1>{{ group.name }}</h1>
+<p> {{ group.description }}</p>
+
+
+<h3>Group Members</h3>
+
+{% for member in members %}
+    <p>{{ member }}</hp>
+{% empty %}    
+<p>No member yet!</p>
+{% endfor %}
+
+<form method="post" action="{% url 'join_group' group.id%}">
+    {% csrf_token %}
+    {% if user in group.member.all %}
+        <button>Leave Group</button>
+    {% else %}
+        <button>Join Group</button>
+    {% endif %}
+
+</form>
