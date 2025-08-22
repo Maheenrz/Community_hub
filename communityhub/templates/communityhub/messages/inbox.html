@@ -1,0 +1,10 @@
+<h1>Inbox</h1>
+
+{% for message in messages %}
+  <p>
+    <b>{{ message.sender.username }}</b>: {{ message.content }}
+    <br><small>{{ message.created_at }}</small>
+  </p>
+{% empty %}
+  <p>No messages yet.</p>
+{% endfor %}

@@ -1,10 +1,26 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import render, get_object_or_404
-from .models import Post, Profile, Like, Group
+from .models import Post, Profile, Like, Group, Notification
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm, CommentForm, GroupForm
 from django.core.paginator import Paginator
+
+
+
+
+def register_view(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("home_feed")
+    else:
+        form = RegisterForm()
+    return render(request, "accounts/register.html", {"form": form})
+
+
 
 # Home
 def home_feed(request):
@@ -43,9 +59,16 @@ def post_detail(request, post_id):
             comment.post = post
             comment.author = request.user
             comment.save()
+
+            Notification.objects.create(
+                user=post.author,
+                message=f"{request.user.username} commented on your post '{post.title}'"    
+            )   
             return redirect('post_detail', post_id=post.id)
     else:
         form = CommentForm()
+
+    
 
 
     return render(request, 'communityhub/post_detail.html',{
@@ -141,3 +164,22 @@ def join_group(request, group_id):
         group.member.add(request.user) 
 
     return redirect('group_detail', group_id=group.id)       
+
+
+@login_required
+def send_message(request, username):
+    recipient = get_object_or_404(User, username=username)
+
+    if request.method == "POST":
+        content = request.POST.get("content")
+        if content.strip():  # make sure not empty
+            Message.objects.create(sender=request.user, recipient=recipient, content=content)
+        return redirect("inbox")
+
+    return render(request, "messages/send.html", {"recipient": recipient})
+
+
+@login_required
+def inbox(request):
+    messages = request.user.received_messages.all().order_by("-created_at")
+    return render(request, "messages/inbox.html", {"messages": messages})

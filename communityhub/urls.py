@@ -13,5 +13,7 @@ urlpatterns = [
     path('group/', views.groups, name='groups'),
     path('group/<int:group_id>/', views.group_detail, name = 'group_detail'),
     path('group/<int:group_id>/join/', views.join_group, name='join_group'),
+    path("inbox/", views.inbox, name="inbox"),
+    path("send/<str:username>/", views.send_message, name="send_message"),
 
 ]
